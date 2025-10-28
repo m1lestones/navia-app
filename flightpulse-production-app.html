@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>FlightPulse - Live Flight Tracking</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary-blue: #0066FF;
+            --sky-blue: #00CCFF;
+            --success-green: #10B981;
+            --warning-amber: #F59E0B;
+            --error-red: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #root {
+            width: 100%;
+            max-width: 430px;
+            height: 932px;
+            max-height: 100vh;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0, 102, 255, 0.3);
+        }
+
+        @media (max-width: 430px) {
+            #root {
+                max-width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+            }
+            body {
+                background: #fff;
+            }
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .status-bar-time {
+            color: var(--gray-900);
+        }
+
+        .status-bar-icons {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            color: var(--gray-900);
+        }
+
+        /* Screen Container */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gray-50);
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .screen::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            color: white;
+            padding: 54px 24px 20px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 102, 255, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--error-red);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* Content */
+        .content {
+            padding: 20px 20px 100px;
+        }
+
+        /* Greeting Card */
+        .greeting-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .greeting-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        .greeting-card p {
+            color: var(--gray-500);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .section-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .section-link {
+            font-size: 14px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .section-link:active {
+            opacity: 0.6;
+        }
+
+        /* Flight Cards */
+        .flight-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .flight-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .flight-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--status-color);
+        }
+
+        .flight-card.status-ontime {
+            --status-color: var(--success-green);
+        }
+
+        .flight-card.status-delayed {
+            --status-color: var(--warning-amber);
+        }
+
+        .flight-card.status-cancelled {
+            --status-color: var(--error-red);
+        }
+
+        .flight-card.status-departed {
+            --status-color: var(--primary-blue);
+        }
+
+        .flight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .flight-airline {
+            flex: 1;
+        }
+
+        .flight-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            font-family: 'SF Mono', 'Monaco', monospace;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .flight-airline-name {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .status-badge.ontime {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-badge.delayed {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-badge.cancelled {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .status-badge.departed {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        /* Flight Route */
+        .flight-route {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 16px;
+        }
+
+        .airport-code {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            font-family: 'SF Mono', 'Monaco', monospace;
+            letter-spacing: -0.5px;
+        }
+
+        .route-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--gray-200), var(--primary-blue), var(--gray-200));
+            position: relative;
+            margin: 0 8px;
+        }
+
+        .plane-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 18px;
+            animation: fly 3s ease-in-out infinite;
+        }
+
+        @keyframes fly {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) translateX(0); }
+            50% { transform: translate(-50%, -50%) rotate(-45deg) translateX(3px); }
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            margin: 16px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--sky-blue));
+            border-radius: 999px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Flight Info Grid */
+        .flight-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+            animation: slideUp 0.7s ease-out;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:active {
+            transform: scale(0.95);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 28px;
+            font-weight: 300;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab:active {
+            transform: scale(0.9);
+            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.5);
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 24px;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.2s;
+            padding: 8px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .nav-item:active {
+            transform: scale(0.95);
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+            background: rgba(0, 102, 255, 0.08);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: flex-end;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: white;
+            width: 100%;
+            border-radius: 28px 28px 0 0;
+            padding: 24px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUpModal 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUpModal {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-handle {
+            width: 36px;
+            height: 5px;
+            background: var(--gray-300);
+            border-radius: 999px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .close-btn {
+            background: var(--gray-100);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-btn:active {
+            transform: scale(0.9);
+            background: var(--gray-200);
+        }
+
+        /* Search Input */
+        .search-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            background: var(--gray-50);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--gray-400);
+        }
+
+        /* Popular Routes */
+        .routes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .route-card {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .route-card:active {
+            transform: scale(0.95);
+            background: white;
+            border-color: var(--primary-blue);
+        }
+
+        .route-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .route-count {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* Profile Screen */
+        .profile-header {
+            text-align: center;
+            padding: 32px 24px;
+            background: white;
+            border-radius: 0 0 32px 32px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            margin: 0 auto 16px;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.3);
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 15px;
+            color: var(--gray-500);
+        }
+
+        /* Plan Card */
+        .plan-card {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.1));
+            border: 2px solid var(--primary-blue);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .plan-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .plan-description {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .btn-upgrade {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 14px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-upgrade:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 10px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .achievement {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .achievement.earned {
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(0, 204, 255, 0.05));
+        }
+
+        .achievement.locked {
+            opacity: 0.5;
+        }
+
+        .achievement-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .achievement-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-700);
+            line-height: 1.3;
+        }
+
+        /* Loading Animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 102, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 430px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            .content {
+                padding: 16px 16px 100px;
+            }
+            .flight-card {
+                padding: 16px;
+            }
+            .airport-code {
+                font-size: 24px;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Mock Data
+        const mockFlights = [
+            {
+                id: 1,
+                flightNumber: 'AA 1234',
+                airline: 'American Airlines',
+                departure: 'JFK',
+                arrival: 'LAX',
+                departureTime: '2:30 PM',
+                arrivalTime: '6:45 PM',
+                status: 'ontime',
+                gate: 'B22',
+                terminal: '4',
+                progress: 45,
+                delay: 0
+            },
+            {
+                id: 2,
+                flightNumber: 'UA 567',
+                airline: 'United Airlines',
+                departure: 'SFO',
+                arrival: 'ORD',
+                departureTime: '10:15 AM',
+                arrivalTime: '4:30 PM',
+                status: 'delayed',
+                gate: 'C15',
+                terminal: '1',
+                delay: 15,
+                progress: 0
+            },
+            {
+                id: 3,
+                flightNumber: 'DL 890',
+                airline: 'Delta Air Lines',
+                departure: 'ATL',
+                arrival: 'MIA',
+                departureTime: '8:00 AM',
+                arrivalTime: '9:45 AM',
+                status: 'departed',
+                gate: 'A8',
+                terminal: 'S',
+                progress: 75,
+                delay: 0
+            }
+        ];
+
+        function App() {
+            const [currentScreen, setCurrentScreen] = useState('dashboard');
+            const [showSearchModal, setShowSearchModal] = useState(false);
+            const [trackedFlights] = useState(mockFlights);
+
+            return (
+                <>
+                    {currentScreen === 'dashboard' && (
+                        <Dashboard 
+                            flights={trackedFlights}
+                            onSearch={() => setShowSearchModal(true)}
+                            onNavigate={setCurrentScreen}
+                        />
+                    )}
+                    {currentScreen === 'search' && (
+                        <SearchScreen onNavigate={setCurrentScreen} />
+                    )}
+                    {currentScreen === 'automation' && (
+                        <AutomationScreen onNavigate={setCurrentScreen} />
+                    )}
+                    {currentScreen === 'profile' && (
+                        <Profile onNavigate={setCurrentScreen} />
+                    )}
+                    {showSearchModal && (
+                        <SearchModal onClose={() => setShowSearchModal(false)} />
+                    )}
+                </>
+            );
+        }
+
+        function StatusBar() {
+            const [time, setTime] = useState(new Date());
+
+            useEffect(() => {
+                const timer = setInterval(() => setTime(new Date()), 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <div className="status-bar">
+                    <div className="status-bar-time">
+                        {time.toLocaleTimeString('en-US', { 
+                            hour: 'numeric', 
+                            minute: '2-digit' 
+                        })}
+                    </div>
+                    <div className="status-bar-icons">
+                        <span>📶</span>
+                        <span>📡</span>
+                        <span>🔋</span>
+                    </div>
+                </div>
+            );
+        }
+
+        function Header() {
+            return (
+                <div className="header">
+                    <div className="header-content">
+                        <h1>
+                            <span className="logo-icon">✈️</span>
+                            FlightPulse
+                        </h1>
+                        <div className="header-actions">
+                            <button className="icon-btn">
+                                🔔
+                                <span className="badge">2</span>
+                            </button>
+                            <button className="icon-btn">👤</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function Dashboard({ flights, onSearch, onNavigate }) {
+            const getGreeting = () => {
+                const hour = new Date().getHours();
+                if (hour < 12) return 'Good morning';
+                if (hour < 18) return 'Good afternoon';
+                return 'Good evening';
+            };
+
+            return (
+                <div className="screen">
+                    <StatusBar />
+                    <Header />
+                    <div className="content">
+                        <div className="greeting-card">
+                            <h2>{getGreeting()}, Alex! ☀️</h2>
+                            <p>Your next flight: Tomorrow at {flights[0].departureTime}</p>
+                            <div className="live-indicator">
+                                <div className="live-dot"></div>
+                                <span>LIVE TRACKING</span>
+                            </div>
+                        </div>
+
+                        <div className="section-header">
+                            <h3>Active Flights ({flights.length})</h3>
+                            <a href="#" className="section-link">View All →</a>
+                        </div>
+
+                        {flights.map(flight => (
+                            <FlightCard key={flight.id} flight={flight} />
+                        ))}
+
+                        <div className="section-header" style={{ marginTop: '32px' }}>
+                            <h3>Quick Stats</h3>
+                        </div>
+                        <div className="stats-grid">
+                            <div className="stat-card">
+                                <div className="stat-value">24</div>
+                                <div className="stat-label">Flights</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-value">98%</div>
+                                <div className="stat-label">On-Time</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-value">⭐ 5</div>
+                                <div className="stat-label">Level</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button className="fab" onClick={onSearch}>+</button>
+                    <BottomNav active="home" onNavigate={onNavigate} />
+                </div>
+            );
+        }
+
+        function FlightCard({ flight }) {
+            const getStatusInfo = () => {
+                switch(flight.status) {
+                    case 'ontime': 
+                        return { text: '✓ On Time', class: 'ontime' };
+                    case 'delayed': 
+                        return { text: `⚠ Delayed ${flight.delay}m`, class: 'delayed' };
+                    case 'cancelled': 
+                        return { text: '✕ Cancelled', class: 'cancelled' };
+                    case 'departed': 
+                        return { text: '✈ Departed', class: 'departed' };
+                    default: 
+                        return { text: 'Scheduled', class: 'ontime' };
+                }
+            };
+
+            const statusInfo = getStatusInfo();
+
+            return (
+                <div className={`flight-card status-${flight.status}`}>
+                    <div className="flight-header">
+                        <div className="flight-airline">
+                            <div className="flight-number">{flight.flightNumber}</div>
+                            <div className="flight-airline-name">{flight.airline}</div>
+                        </div>
+                        <span className={`status-badge ${statusInfo.class}`}>
+                            {statusInfo.text}
+                        </span>
+                    </div>
+
+                    <div className="flight-route">
+                        <div className="airport-code">{flight.departure}</div>
+                        <div className="route-line">
+                            <span className="plane-icon">✈️</span>
+                        </div>
+                        <div className="airport-code">{flight.arrival}</div>
+                    </div>
+
+                    {flight.progress > 0 && (
+                        <div className="progress-section">
+                            <div className="progress-bar">
+                                <div 
+                                    className="progress-fill" 
+                                    style={{ width: `${flight.progress}%` }}
+                                ></div>
+                            </div>
+                            <div className="progress-text">
+                                {flight.progress}% Complete
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="flight-info">
+                        <div className="info-item">
+                            <div className="info-label">Departure</div>
+                            <div className="info-value">{flight.departureTime}</div>
+                        </div>
+                        <div className="info-item">
+                            <div className="info-label">Arrival</div>
+                            <div className="info-value">{flight.arrivalTime}</div>
+                        </div>
+                        <div className="info-item">
+                            <div className="info-label">Gate</div>
+                            <div className="info-value">{flight.gate}</div>
+                        </div>
+                        <div className="info-item">
+                            <div className="info-label">Terminal</div>
+                            <div className="info-value">{flight.terminal}</div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function SearchModal({ onClose }) {
+            const [searchQuery, setSearchQuery] = useState('');
+
+            const popularRoutes = [
+                { route: 'JFK → LAX', count: 45 },
+                { route: 'SFO → ORD', count: 38 },
+                { route: 'ATL → MIA', count: 32 },
+                { route: 'BOS → SEA', count: 28 }
+            ];
+
+            return (
+                <div className="modal-overlay" onClick={onClose}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-handle"></div>
+                        <div className="modal-header">
+                            <h2>Search Flights</h2>
+                            <button className="close-btn" onClick={onClose}>✕</button>
+                        </div>
+
+                        <div className="search-container">
+                            <span className="search-icon">🔍</span>
+                            <input
+                                type="text"
+                                className="search-input"
+                                placeholder="Flight number, route, or airline..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                autoFocus
+                            />
+                        </div>
+
+                        {!searchQuery && (
+                            <>
+                                <div className="section-header">
+                                    <h3>Popular Routes</h3>
+                                </div>
+                                <div className="routes-grid">
+                                    {popularRoutes.map(item => (
+                                        <div key={item.route} className="route-card">
+                                            <div className="route-name">{item.route}</div>
+                                            <div className="route-count">{item.count} flights</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function Profile({ onNavigate }) {
+            return (
+                <div className="screen">
+                    <StatusBar />
+                    <Header />
+                    
+                    <div className="profile-header">
+                        <div className="avatar">AK</div>
+                        <div className="profile-name">Alex Kim</div>
+                        <div className="profile-email">alex@email.com</div>
+                    </div>
+
+                    <div className="content">
+                        <div className="plan-card">
+                            <div className="plan-badge">FREE PLAN</div>
+                            <div className="plan-description">
+                                Track up to 3 flights<br/>Limited automation features
+                            </div>
+                            <button className="btn-upgrade">
+                                Upgrade to Pro - $9.99/mo →
+                            </button>
+                        </div>
+
+                        <div className="section-header">
+                            <h3>Travel Stats</h3>
+                        </div>
+                        <div className="stats-grid">
+                            <div className="stat-card">
+                                <div className="stat-value">24</div>
+                                <div className="stat-label">Flights</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-value">12</div>
+                                <div className="stat-label">Airports</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-value">98%</div>
+                                <div className="stat-label">On-Time</div>
+                            </div>
+                        </div>
+
+                        <div className="section-header" style={{ marginTop: '32px' }}>
+                            <h3>Achievements</h3>
+                            <a href="#" className="section-link">View All →</a>
+                        </div>
+                        <div className="achievements-grid">
+                            <div className="achievement earned">
+                                <span className="achievement-icon">🛫</span>
+                                <div className="achievement-name">First Flight</div>
+                            </div>
+                            <div className="achievement earned">
+                                <span className="achievement-icon">🌍</span>
+                                <div className="achievement-name">Global Nomad</div>
+                            </div>
+                            <div className="achievement earned">
+                                <span className="achievement-icon">⚡</span>
+                                <div className="achievement-name">Auto Master</div>
+                            </div>
+                            <div className="achievement locked">
+                                <span className="achievement-icon">💯</span>
+                                <div className="achievement-name">Century Club</div>
+                            </div>
+                            <div className="achievement locked">
+                                <span className="achievement-icon">🏆</span>
+                                <div className="achievement-name">Elite Status</div>
+                            </div>
+                            <div className="achievement locked">
+                                <span className="achievement-icon">⭐</span>
+                                <div className="achievement-name">5-Star Pro</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <BottomNav active="profile" onNavigate={onNavigate} />
+                </div>
+            );
+        }
+
+        function SearchScreen({ onNavigate }) {
+            return (
+                <div className="screen">
+                    <StatusBar />
+                    <Header />
+                    <div className="content" style={{ textAlign: 'center', paddingTop: '100px' }}>
+                        <div style={{ fontSize: '64px', marginBottom: '20px' }}>🔍</div>
+                        <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '12px', color: 'var(--gray-900)' }}>
+                            Search Flights
+                        </h2>
+                        <p style={{ color: 'var(--gray-500)', marginBottom: '24px' }}>
+                            This screen would show flight search interface
+                        </p>
+                    </div>
+                    <BottomNav active="search" onNavigate={onNavigate} />
+                </div>
+            );
+        }
+
+        function AutomationScreen({ onNavigate }) {
+            return (
+                <div className="screen">
+                    <StatusBar />
+                    <Header />
+                    <div className="content" style={{ textAlign: 'center', paddingTop: '100px' }}>
+                        <div style={{ fontSize: '64px', marginBottom: '20px' }}>⚡</div>
+                        <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '12px', color: 'var(--gray-900)' }}>
+                            Automation
+                        </h2>
+                        <p style={{ color: 'var(--gray-500)', marginBottom: '24px' }}>
+                            This screen would show automation rules and builder
+                        </p>
+                    </div>
+                    <BottomNav active="auto" onNavigate={onNavigate} />
+                </div>
+            );
+        }
+
+        function BottomNav({ active, onNavigate }) {
+            const navItems = [
+                { id: 'home', icon: '🏠', label: 'Home', screen: 'dashboard' },
+                { id: 'search', icon: '🔍', label: 'Search', screen: 'search' },
+                { id: 'auto', icon: '⚡', label: 'Auto', screen: 'automation' },
+                { id: 'profile', icon: '👤', label: 'Profile', screen: 'profile' }
+            ];
+
+            return (
+                <div className="bottom-nav">
+                    {navItems.map(item => (
+                        <div
+                            key={item.id}
+                            className={`nav-item ${active === item.id ? 'active' : ''}`}
+                            onClick={() => onNavigate(item.screen)}
+                        >
+                            <span className="nav-icon">{item.icon}</span>
+                            <span>{item.label}</span>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
