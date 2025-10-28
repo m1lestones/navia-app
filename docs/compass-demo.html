@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navia Compass with Degrees & Gate Locations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            opacity: 0.8;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .compass-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ENHANCED NAVIA COMPASS WITH NUMBERS */
+        .navia-compass {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Luminous Glow */
+        .luminous-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+            animation: luminousBreath 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes luminousBreath {
+            0%, 100% { 
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Navigation Pulse Rings */
+        .nav-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(14, 165, 233, 0.6);
+            animation: navPulseExpand 1.5s ease-out infinite;
+        }
+
+        .nav-pulse:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .nav-pulse:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes navPulseExpand {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+                border-color: rgba(14, 165, 233, 0.8);
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+                border-color: rgba(14, 165, 233, 0);
+            }
+        }
+
+        /* Outer Ring with Degree Numbers */
+        .compass-outer-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1e3a5f, #0f1729);
+            box-shadow: 
+                inset 0 0 30px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(14, 165, 233, 0.3);
+            border: 3px solid rgba(14, 165, 233, 0.3);
+        }
+
+        /* Degree Numbers (0-360) */
+        .degree-number {
+            position: absolute;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            text-shadow: 0 0 5px rgba(14, 165, 233, 0.5);
+            transform-origin: center;
+            width: 30px;
+            text-align: center;
+            left: 50%;
+            top: 20px;
+        }
+
+        .degree-number.major {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0EA5E9;
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
+        }
+
+        /* Degree Markers */
+        .degree-marker {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            top: 10px;
+            left: 50%;
+            transform-origin: 50% 190px;
+            box-shadow: 0 0 3px rgba(14, 165, 233, 0.5);
+        }
+
+        .degree-marker.major {
+            width: 3px;
+            height: 18px;
+            background: #0EA5E9;
+            box-shadow: 0 0 8px rgba(14, 165, 233, 1);
+        }
+
+        /* Cardinal Directions */
+        .cardinal {
+            position: absolute;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0EA5E9;
+            text-shadow: 0 0 20px rgba(14, 165, 233, 1);
+            z-index: 10;
+            animation: cardinalGlow 3s ease-in-out infinite;
+        }
+
+        .cardinal.n { top: 50px; left: 50%; transform: translateX(-50%); }
+        .cardinal.e { right: 50px; top: 50%; transform: translateY(-50%); }
+        .cardinal.s { bottom: 50px; left: 50%; transform: translateX(-50%); }
+        .cardinal.w { left: 50px; top: 50%; transform: translateY(-50%); }
+
+        @keyframes cardinalGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px rgba(14, 165, 233, 1);
+            }
+            50% { 
+                text-shadow: 0 0 30px rgba(14, 165, 233, 1), 0 0 45px rgba(14, 165, 233, 0.5);
+            }
+        }
+
+        /* Intercardinal Directions */
+        .intercardinal {
+            position: absolute;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgba(14, 165, 233, 0.8);
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
+            z-index: 10;
+        }
+
+        .intercardinal.ne { top: 70px; right: 70px; }
+        .intercardinal.se { bottom: 70px; right: 70px; }
+        .intercardinal.sw { bottom: 70px; left: 70px; }
+        .intercardinal.nw { top: 70px; left: 70px; }
+
+        /* Gate Location Markers */
+        .gate-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 0 20px rgba(245, 158, 11, 0.8),
+                0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: gatePulse 2s ease-in-out infinite;
+            z-index: 15;
+        }
+
+        .gate-marker:hover {
+            transform: scale(1.2);
+            box-shadow: 
+                0 0 30px rgba(245, 158, 11, 1),
+                0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes gatePulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.8), 0 4px 12px rgba(0, 0, 0, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 35px rgba(245, 158, 11, 1), 0 6px 20px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        /* Inner Face */
+        .compass-inner {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #1e3a8a, #0f1729);
+            border: 2px solid rgba(14, 165, 233, 0.4);
+            box-shadow: 
+                inset 0 0 40px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(14, 165, 233, 0.2);
+        }
+
+        /* Compass Rose Lines */
+        .rose-line {
+            position: absolute;
+            width: 2px;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(14, 165, 233, 0.6), transparent);
+            left: 50%;
+            top: 50%;
+            transform-origin: 50% 0%;
+            box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Radar Sweep */
+        .radar-sweep {
+            position: absolute;
+            width: 2px;
+            height: 140px;
+            background: linear-gradient(to bottom, rgba(245, 158, 11, 0.9), transparent);
+            top: 50%;
+            left: 50%;
+            transform-origin: top center;
+            transform: translate(-50%, 0);
+            animation: radarSweep 4s linear infinite;
+            z-index: 5;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.8));
+        }
+
+        @keyframes radarSweep {
+            0% { transform: translate(-50%, 0) rotate(0deg); }
+            100% { transform: translate(-50%, 0) rotate(360deg); }
+        }
+
+        /* Compass Needle */
+        .compass-needle {
+            position: absolute;
+            width: 6px;
+            height: 130px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            transform-origin: bottom center;
+            animation: needleRotate 4s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .needle-north {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 80px solid #FF0066;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 0 15px #FF0066);
+            animation: needleGlow 1.5s ease-in-out infinite;
+        }
+
+        .needle-south {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 50px solid rgba(255, 255, 255, 0.5);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes needleRotate {
+            0%, 100% { transform: translate(-50%, -100%) rotate(-5deg); }
+            50% { transform: translate(-50%, -100%) rotate(5deg); }
+        }
+
+        @keyframes needleGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 15px #FF0066);
+            }
+            50% { 
+                filter: drop-shadow(0 0 25px #FF0066) drop-shadow(0 0 35px #FF0066);
+            }
+        }
+
+        /* Center Hub */
+        .compass-center {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #F59E0B, #D97706);
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                0 0 25px rgba(245, 158, 11, 0.9),
+                inset 0 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            animation: centerPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes centerPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 25px rgba(245, 158, 11, 0.9);
+            }
+            50% { 
+                transform: scale(1.15);
+                box-shadow: 0 0 40px rgba(245, 158, 11, 1), 0 0 60px rgba(245, 158, 11, 0.5);
+            }
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            position: absolute;
+            bottom: -70px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(14, 165, 233, 0.1);
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #10B981;
+            animation: statusPulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 15px #10B981;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 15px #10B981;
+            }
+            50% { 
+                transform: scale(1.3);
+                box-shadow: 0 0 25px #10B981, 0 0 35px rgba(16, 185, 129, 0.5);
+            }
+        }
+
+        .status-text {
+            font-weight: 600;
+            color: #0EA5E9;
+            font-size: 1rem;
+        }
+
+        /* Brand Name */
+        .brand-name {
+            margin-top: 90px;
+            text-align: center;
+        }
+
+        .brand-name h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .brand-name p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+
+        /* Gate Control Panel */
+        .gate-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .gate-control h3 {
+            color: #0EA5E9;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gate-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .gate-item {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gate-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .gate-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+        }
+
+        .gate-details {
+            flex: 1;
+        }
+
+        .gate-name {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .gate-degree {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .info-box {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .info-box h4 {
+            color: #F59E0B;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .navia-compass {
+                width: 320px;
+                height: 320px;
+            }
+
+            .compass-outer-ring,
+            .luminous-glow,
+            .nav-pulse {
+                width: 320px;
+                height: 320px;
+            }
+
+            .compass-inner {
+                width: 220px;
+                height: 220px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🧭 NAVIA Compass with Gate Locations</h1>
+    <p class="subtitle">Full 360° Degrees + Assignable Gate Markers</p>
+
+    <div class="main-container">
+        <div class="compass-container">
+            <div class="navia-compass">
+                <!-- Luminous Glow -->
+                <div class="luminous-glow"></div>
+
+                <!-- Navigation Pulse Rings -->
+                <div class="nav-pulse"></div>
+                <div class="nav-pulse"></div>
+                <div class="nav-pulse"></div>
+
+                <!-- Outer Ring with Degrees -->
+                <div class="compass-outer-ring" id="compassRing">
+                    <!-- Degree markers and numbers will be generated by JavaScript -->
+                </div>
+
+                <!-- Cardinal Directions -->
+                <div class="cardinal n">N</div>
+                <div class="cardinal e">E</div>
+                <div class="cardinal s">S</div>
+                <div class="cardinal w">W</div>
+
+                <!-- Intercardinal Directions -->
+                <div class="intercardinal ne">NE</div>
+                <div class="intercardinal se">SE</div>
+                <div class="intercardinal sw">SW</div>
+                <div class="intercardinal nw">NW</div>
+
+                <!-- Gate Markers (Example positions) -->
+                <div class="gate-marker" style="transform: rotate(25deg) translateY(-170px);" title="Gate B22">
+                    B22
+                </div>
+                <div class="gate-marker" style="transform: rotate(135deg) translateY(-170px);" title="Gate C15">
+                    C15
+                </div>
+                <div class="gate-marker" style="transform: rotate(250deg) translateY(-170px);" title="Gate A5">
+                    A5
+                </div>
+
+                <!-- Inner Face -->
+                <div class="compass-inner">
+                    <!-- Compass Rose Lines -->
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(0deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(45deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(90deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(135deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(180deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(225deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(270deg);"></div>
+                    <div class="rose-line" style="transform: translate(-50%, -50%) rotate(315deg);"></div>
+                </div>
+
+                <!-- Radar Sweep -->
+                <div class="radar-sweep"></div>
+
+                <!-- Compass Needle -->
+                <div class="compass-needle">
+                    <div class="needle-north"></div>
+                    <div class="needle-south"></div>
+                </div>
+
+                <!-- Center Hub -->
+                <div class="compass-center"></div>
+
+                <!-- Status Indicator -->
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">3 GATES ACTIVE</span>
+                </div>
+            </div>
+
+            <div class="brand-name">
+                <h2>NAVIA</h2>
+                <p>Navigate Every Journey</p>
+            </div>
+        </div>
+
+        <div class="gate-control">
+            <h3>🚪 Active Gates</h3>
+            <div class="gate-list">
+                <div class="gate-item">
+                    <div class="gate-info">
+                        <div class="gate-icon">B22</div>
+                        <div class="gate-details">
+                            <div class="gate-name">Gate B22</div>
+                            <div class="gate-degree">Position: 25° (NNE)</div>
+                        </div>
+                    </div>
+                    <div style="color: #10B981; font-size: 1.2rem;">✈️</div>
+                </div>
+
+                <div class="gate-item">
+                    <div class="gate-info">
+                        <div class="gate-icon">C15</div>
+                        <div class="gate-details">
+                            <div class="gate-name">Gate C15</div>
+                            <div class="gate-degree">Position: 135° (SE)</div>
+                        </div>
+                    </div>
+                    <div style="color: #F59E0B; font-size: 1.2rem;">⏰</div>
+                </div>
+
+                <div class="gate-item">
+                    <div class="gate-info">
+                        <div class="gate-icon">A5</div>
+                        <div class="gate-details">
+                            <div class="gate-name">Gate A5</div>
+                            <div class="gate-degree">Position: 250° (WSW)</div>
+                        </div>
+                    </div>
+                    <div style="color: #0EA5E9; font-size: 1.2rem;">🚶</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 How Gate Locations Work</h4>
+                <p>
+                    Each gate marker appears at its assigned degree position (0-360°) on the compass. 
+                    The compass shows your relative position to each gate, making airport navigation intuitive. 
+                    Tap any gate marker to see details or get directions.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate degree markers and numbers (0-360)
+        const compassRing = document.getElementById('compassRing');
+        
+        // Create degree markers and numbers every 10 degrees
+        for (let i = 0; i < 360; i += 10) {
+            // Create marker
+            const marker = document.createElement('div');
+            marker.className = i % 30 === 0 ? 'degree-marker major' : 'degree-marker';
+            marker.style.transform = `translate(-50%, 0) rotate(${i}deg)`;
+            compassRing.appendChild(marker);
+            
+            // Create degree number every 30 degrees
+            if (i % 30 === 0) {
+                const number = document.createElement('div');
+                number.className = i % 90 === 0 ? 'degree-number major' : 'degree-number';
+                number.textContent = i;
+                number.style.transform = `translate(-50%, 0) rotate(${i}deg)`;
+                compassRing.appendChild(number);
+            }
+        }
+
+        // Log compass details
+        console.log('🧭 Navia Compass with Gate Locations Loaded');
+        console.log('📐 Full 360° degree markers displayed');
+        console.log('🚪 3 example gates positioned:');
+        console.log('   - Gate B22: 25° (NNE)');
+        console.log('   - Gate C15: 135° (SE)');
+        console.log('   - Gate A5: 250° (WSW)');
+        
+        // Example: How to add a gate dynamically
+        function addGate(gateName, degrees) {
+            const compassElement = document.querySelector('.navia-compass');
+            const gateMarker = document.createElement('div');
+            gateMarker.className = 'gate-marker';
+            gateMarker.textContent = gateName;
+            gateMarker.style.transform = `rotate(${degrees}deg) translateY(-170px)`;
+            gateMarker.title = `Gate ${gateName}`;
+            compassElement.appendChild(gateMarker);
+            console.log(`✅ Added ${gateName} at ${degrees}°`);
+        }
+
+        // You can call this function to add more gates:
+        // addGate('D8', 180); // Adds Gate D8 at 180° (South)
+    </script>
+</body>
+</html>

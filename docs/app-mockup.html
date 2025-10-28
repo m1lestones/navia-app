@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navia App - Complete Visual Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 0 40px rgba(14, 165, 233, 0.5);
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.8;
+        }
+
+        .mockup-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+        }
+
+        /* PHONE MOCKUP */
+        .phone-mockup {
+            width: 380px;
+            height: 800px;
+            background: #1F2937;
+            border-radius: 45px;
+            padding: 15px;
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 15px #0f172a,
+                0 0 60px rgba(14, 165, 233, 0.3);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #000;
+            border-radius: 0 0 15px 15px;
+            z-index: 100;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* APP HEADER */
+        .app-header {
+            padding: 50px 20px 20px;
+            background: rgba(14, 165, 233, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .icon-btn:hover {
+            background: rgba(14, 165, 233, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* LIVE STATUS BAR */
+        .live-status {
+            padding: 12px 20px;
+            background: rgba(16, 185, 129, 0.15);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 15px #10B981;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 15px #10B981;
+            }
+            50% { 
+                transform: scale(1.3);
+                box-shadow: 0 0 25px #10B981, 0 0 35px rgba(16, 185, 129, 0.5);
+            }
+        }
+
+        .live-text {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #10B981;
+            letter-spacing: 1px;
+        }
+
+        /* MAIN CONTENT */
+        .app-content {
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100% - 180px);
+        }
+
+        /* FLIGHT CARD */
+        .flight-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .flight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .flight-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0EA5E9;
+        }
+
+        .flight-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #10B981;
+        }
+
+        .status-pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            animation: statusPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .flight-route {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .airport {
+            text-align: center;
+        }
+
+        .airport-code {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .airport-name {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .flight-progress {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0EA5E9, #10B981);
+            width: 65%;
+            border-radius: 2px;
+            position: relative;
+            animation: progressGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes progressGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(14, 165, 233, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.8); }
+        }
+
+        .plane-icon {
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            font-size: 1.2rem;
+            animation: planeMove 2s ease-in-out infinite;
+        }
+
+        @keyframes planeMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        .flight-times {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .flight-info {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #0EA5E9;
+        }
+
+        /* MINI COMPASS */
+        .mini-compass {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .mini-compass-ring {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1e3a8a, #0f1729);
+            border: 2px solid rgba(14, 165, 233, 0.4);
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.5),
+                0 0 15px rgba(14, 165, 233, 0.3);
+            position: relative;
+            animation: compassRotate 8s linear infinite;
+        }
+
+        @keyframes compassRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mini-pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(14, 165, 233, 0.6);
+            border-radius: 50%;
+            animation: miniPulse 1.5s ease-out infinite;
+        }
+
+        @keyframes miniPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .mini-needle {
+            position: absolute;
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, #FF0066, transparent);
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 0 5px #FF0066);
+        }
+
+        .mini-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #F59E0B;
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+            animation: miniCenterPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes miniCenterPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .mini-cardinal {
+            position: absolute;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #0EA5E9;
+        }
+
+        .mini-cardinal.n { top: 5px; left: 50%; transform: translateX(-50%); }
+        .mini-cardinal.s { bottom: 5px; left: 50%; transform: translateX(-50%); }
+
+        /* WINGMATE SECTION */
+        .wingmate-section {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .wingmate-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+            animation: wingmateFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes wingmateFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .wingmate-content {
+            flex: 1;
+        }
+
+        .wingmate-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #F59E0B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .wingmate-message {
+            color: white;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            animation: messageAppear 0.5s ease-out;
+        }
+
+        @keyframes messageAppear {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
+        }
+
+        /* GATE INFO */
+        .gate-info {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .gate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .gate-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gate-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0EA5E9;
+        }
+
+        .gate-direction {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* QUICK ACTIONS */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(14, 165, 233, 0.2);
+            border-color: rgba(14, 165, 233, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .action-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px 25px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: #0EA5E9;
+        }
+
+        .nav-icon {
+            font-size: 1.3rem;
+        }
+
+        .nav-item.active .nav-icon {
+            animation: navBounce 0.5s ease;
+        }
+
+        @keyframes navBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+        }
+
+        /* SCREEN LABELS */
+        .screen-label {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .screen-label h3 {
+            color: #0EA5E9;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .screen-label p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE PADDING SYSTEM */
+        
+        /* Default Desktop/Large Tablet (1024px+) */
+        .app-content {
+            padding: 20px;
+        }
+
+        .app-header {
+            padding: 50px 20px 20px;
+        }
+
+        .live-status {
+            padding: 12px 20px;
+        }
+
+        .flight-card {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .wingmate-section {
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .gate-info {
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bottom-nav {
+            padding: 15px 20px 25px;
+        }
+
+        /* iPad Pro / Large Tablets (1024px - 1366px) */
+        @media (min-width: 1024px) and (max-width: 1366px) {
+            .phone-mockup {
+                width: 420px;
+                height: 900px;
+            }
+
+            .app-header {
+                padding: 60px 25px 25px;
+            }
+
+            .app-content {
+                padding: 25px;
+            }
+
+            .flight-card {
+                padding: 25px;
+                margin-bottom: 25px;
+            }
+
+            .wingmate-section {
+                padding: 22px;
+                margin-bottom: 25px;
+            }
+
+            .gate-info {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+
+            .quick-actions {
+                gap: 15px;
+            }
+
+            .action-btn {
+                padding: 18px;
+            }
+
+            .bottom-nav {
+                padding: 18px 25px 30px;
+            }
+        }
+
+        /* Standard Tablets (768px - 1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .mockup-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 20px;
+            }
+
+            .phone-mockup {
+                width: 400px;
+                height: 850px;
+            }
+
+            .app-header {
+                padding: 55px 22px 22px;
+            }
+
+            .app-content {
+                padding: 22px;
+            }
+
+            .flight-card {
+                padding: 22px;
+                margin-bottom: 22px;
+            }
+
+            .wingmate-section {
+                padding: 20px;
+                margin-bottom: 22px;
+            }
+
+            .gate-info {
+                padding: 18px;
+                margin-bottom: 22px;
+            }
+
+            .quick-actions {
+                gap: 12px;
+            }
+
+            .action-btn {
+                padding: 16px;
+            }
+
+            .bottom-nav {
+                padding: 16px 22px 28px;
+            }
+
+            .airport-code {
+                font-size: 2.2rem;
+            }
+
+            .wingmate-avatar {
+                width: 55px;
+                height: 55px;
+                font-size: 2rem;
+            }
+        }
+
+        /* Large Phones (414px - 767px) */
+        @media (min-width: 414px) and (max-width: 767px) {
+            body {
+                padding: 30px 15px;
+            }
+
+            .mockup-container {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .phone-mockup {
+                width: 100%;
+                max-width: 414px;
+                height: 896px;
+            }
+
+            .app-header {
+                padding: 55px 20px 20px;
+            }
+
+            .app-content {
+                padding: 20px 18px;
+                height: calc(100% - 180px);
+            }
+
+            .flight-card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .wingmate-section {
+                padding: 18px;
+                margin-bottom: 20px;
+            }
+
+            .gate-info {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+
+            .quick-actions {
+                gap: 12px;
+            }
+
+            .action-btn {
+                padding: 16px;
+            }
+
+            .bottom-nav {
+                padding: 15px 20px 25px;
+            }
+
+            .airport-code {
+                font-size: 2rem;
+            }
+
+            .wingmate-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+            }
+
+            .gate-number {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Standard Phones (375px - 413px) - iPhone SE, 12/13/14 */
+        @media (min-width: 375px) and (max-width: 413px) {
+            body {
+                padding: 25px 10px;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .mockup-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .phone-mockup {
+                width: 100%;
+                max-width: 375px;
+                height: 812px;
+                padding: 12px;
+            }
+
+            .phone-notch {
+                width: 100px;
+                height: 22px;
+            }
+
+            .app-header {
+                padding: 50px 18px 18px;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            .icon-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+
+            .live-status {
+                padding: 10px 18px;
+            }
+
+            .app-content {
+                padding: 18px 16px;
+                height: calc(100% - 170px);
+            }
+
+            .flight-card {
+                padding: 18px;
+                margin-bottom: 18px;
+                border-radius: 18px;
+            }
+
+            .flight-number {
+                font-size: 1rem;
+            }
+
+            .flight-status {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+
+            .airport-code {
+                font-size: 1.8rem;
+            }
+
+            .airport-name {
+                font-size: 0.65rem;
+            }
+
+            .progress-bar {
+                margin: 0 12px;
+            }
+
+            .plane-icon {
+                font-size: 1rem;
+            }
+
+            .flight-info {
+                padding-top: 12px;
+                font-size: 0.8rem;
+            }
+
+            .info-label {
+                font-size: 0.65rem;
+            }
+
+            .mini-compass {
+                width: 70px;
+                height: 70px;
+            }
+
+            .mini-needle {
+                height: 25px;
+            }
+
+            .wingmate-section {
+                padding: 16px;
+                margin-bottom: 18px;
+                border-radius: 18px;
+            }
+
+            .wingmate-avatar {
+                width: 45px;
+                height: 45px;
+                font-size: 1.6rem;
+            }
+
+            .wingmate-name {
+                font-size: 0.7rem;
+            }
+
+            .wingmate-message {
+                font-size: 0.9rem;
+            }
+
+            .message-time {
+                font-size: 0.65rem;
+            }
+
+            .gate-info {
+                padding: 14px;
+                margin-bottom: 18px;
+                border-radius: 14px;
+            }
+
+            .gate-number {
+                font-size: 1.6rem;
+            }
+
+            .gate-direction {
+                font-size: 0.8rem;
+            }
+
+            .quick-actions {
+                gap: 10px;
+            }
+
+            .action-btn {
+                padding: 14px;
+                border-radius: 10px;
+            }
+
+            .action-icon {
+                font-size: 1.3rem;
+            }
+
+            .action-label {
+                font-size: 0.7rem;
+            }
+
+            .bottom-nav {
+                padding: 12px 18px 22px;
+            }
+
+            .nav-icon {
+                font-size: 1.2rem;
+            }
+
+            .nav-label {
+                font-size: 0.65rem;
+            }
+
+            .screen-label {
+                padding: 12px;
+                margin-top: 15px;
+            }
+
+            .screen-label h3 {
+                font-size: 1.1rem;
+            }
+
+            .screen-label p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Small Phones (320px - 374px) - iPhone SE 1st gen, older devices */
+        @media (max-width: 374px) {
+            body {
+                padding: 20px 8px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .mockup-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .phone-mockup {
+                width: 100%;
+                max-width: 320px;
+                height: 568px;
+                padding: 10px;
+                border-radius: 35px;
+            }
+
+            .phone-notch {
+                width: 80px;
+                height: 18px;
+                border-radius: 0 0 12px 12px;
+            }
+
+            .phone-screen {
+                border-radius: 28px;
+            }
+
+            .app-header {
+                padding: 40px 15px 15px;
+            }
+
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .icon-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+
+            .live-status {
+                padding: 8px 15px;
+            }
+
+            .live-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .live-text {
+                font-size: 0.75rem;
+            }
+
+            .app-content {
+                padding: 15px 12px;
+                height: calc(100% - 150px);
+            }
+
+            .flight-card {
+                padding: 15px;
+                margin-bottom: 15px;
+                border-radius: 15px;
+            }
+
+            .flight-number {
+                font-size: 0.95rem;
+            }
+
+            .flight-status {
+                padding: 3px 8px;
+                font-size: 0.65rem;
+            }
+
+            .status-pulse {
+                width: 6px;
+                height: 6px;
+            }
+
+            .airport-code {
+                font-size: 1.5rem;
+                margin-bottom: 3px;
+            }
+
+            .airport-name {
+                font-size: 0.6rem;
+            }
+
+            .progress-bar {
+                margin: 0 10px;
+                height: 3px;
+            }
+
+            .plane-icon {
+                font-size: 0.9rem;
+                right: -8px;
+                top: -6px;
+            }
+
+            .flight-times {
+                font-size: 0.65rem;
+                margin-top: 6px;
+            }
+
+            .flight-info {
+                padding-top: 10px;
+                font-size: 0.75rem;
+            }
+
+            .info-label {
+                font-size: 0.6rem;
+                margin-bottom: 3px;
+            }
+
+            .info-value {
+                font-size: 0.85rem;
+            }
+
+            .mini-compass {
+                width: 60px;
+                height: 60px;
+            }
+
+            .mini-needle {
+                height: 20px;
+            }
+
+            .mini-center {
+                width: 10px;
+                height: 10px;
+            }
+
+            .mini-cardinal {
+                font-size: 0.5rem;
+            }
+
+            .wingmate-section {
+                padding: 12px;
+                margin-bottom: 15px;
+                border-radius: 15px;
+                gap: 10px;
+            }
+
+            .wingmate-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
+            }
+
+            .wingmate-name {
+                font-size: 0.65rem;
+                margin-bottom: 3px;
+            }
+
+            .wingmate-message {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            .message-time {
+                font-size: 0.6rem;
+                margin-top: 3px;
+            }
+
+            .gate-info {
+                padding: 12px;
+                margin-bottom: 15px;
+                border-radius: 12px;
+            }
+
+            .gate-label {
+                font-size: 0.65rem;
+            }
+
+            .gate-number {
+                font-size: 1.4rem;
+            }
+
+            .gate-direction {
+                font-size: 0.75rem;
+            }
+
+            .quick-actions {
+                gap: 8px;
+            }
+
+            .action-btn {
+                padding: 12px;
+                border-radius: 10px;
+            }
+
+            .action-icon {
+                font-size: 1.2rem;
+                margin-bottom: 3px;
+            }
+
+            .action-label {
+                font-size: 0.65rem;
+            }
+
+            .bottom-nav {
+                padding: 10px 15px 18px;
+            }
+
+            .nav-icon {
+                font-size: 1.1rem;
+            }
+
+            .nav-label {
+                font-size: 0.6rem;
+            }
+
+            .screen-label {
+                padding: 10px;
+                margin-top: 12px;
+                border-radius: 12px;
+            }
+
+            .screen-label h3 {
+                font-size: 1rem;
+                margin-bottom: 3px;
+            }
+
+            .screen-label p {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Landscape Orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .phone-mockup {
+                height: auto;
+                max-height: 90vh;
+            }
+
+            .app-content {
+                height: auto;
+                max-height: calc(90vh - 180px);
+                overflow-y: auto;
+            }
+
+            .bottom-nav {
+                position: relative;
+            }
+        }
+
+        /* Safe Area Padding for Notched Devices */
+        @supports (padding: max(0px)) {
+            .app-header {
+                padding-top: max(50px, env(safe-area-inset-top));
+            }
+
+            .bottom-nav {
+                padding-bottom: max(25px, env(safe-area-inset-bottom));
+            }
+
+            .app-content {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+            }
+        }
+
+        /* High DPI Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .flight-card,
+            .wingmate-section,
+            .gate-info,
+            .action-btn {
+                border-width: 0.5px;
+            }
+
+            .progress-bar {
+                height: 5px;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .action-btn,
+            .icon-btn,
+            .nav-item {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .action-btn:active {
+                transform: scale(0.95);
+            }
+
+            .icon-btn:active {
+                transform: scale(0.9);
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Dark Mode Support (if system prefers dark) */
+        @media (prefers-color-scheme: dark) {
+            .phone-mockup {
+                box-shadow: 
+                    0 40px 80px rgba(0, 0, 0, 0.8),
+                    0 0 0 15px #0a0f1a,
+                    0 0 60px rgba(14, 165, 233, 0.4);
+            }
+        }
+
+        /* Desktop Large Screens */
+        @media (min-width: 1367px) {
+            .mockup-container {
+                gap: 50px;
+            }
+
+            .phone-mockup {
+                width: 420px;
+                height: 900px;
+            }
+        }
+
+        /* Ultra-wide displays */
+        @media (min-width: 1920px) {
+            .mockup-container {
+                max-width: 1800px;
+                gap: 60px;
+            }
+
+            .phone-mockup {
+                width: 450px;
+                height: 950px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>🧭 NAVIA</h1>
+        <p>Complete App Visual with All New Features</p>
+    </div>
+
+    <div class="mockup-container">
+        <!-- SCREEN 1: MAIN DASHBOARD -->
+        <div>
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <!-- App Header -->
+                    <div class="app-header">
+                        <div class="app-logo">
+                            <div class="logo-icon">🧭</div>
+                            <div class="logo-text">NAVIA</div>
+                        </div>
+                        <div class="header-actions">
+                            <div class="icon-btn">🔔</div>
+                            <div class="icon-btn">⚙️</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Status Bar -->
+                    <div class="live-status">
+                        <div class="live-dot"></div>
+                        <span class="live-text">LIVE TRACKING</span>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="app-content">
+                        <!-- Flight Card -->
+                        <div class="flight-card">
+                            <div class="flight-header">
+                                <div class="flight-number">AA 1234</div>
+                                <div class="flight-status">
+                                    <div class="status-pulse"></div>
+                                    IN FLIGHT
+                                </div>
+                            </div>
+
+                            <div class="flight-route">
+                                <div class="airport">
+                                    <div class="airport-code">JFK</div>
+                                    <div class="airport-name">New York</div>
+                                </div>
+
+                                <div class="flight-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill">
+                                            <span class="plane-icon">✈️</span>
+                                        </div>
+                                    </div>
+                                    <div class="flight-times">
+                                        <span>14:30</span>
+                                        <span>2h 15m remaining</span>
+                                        <span>19:45</span>
+                                    </div>
+                                </div>
+
+                                <div class="airport">
+                                    <div class="airport-code">LAX</div>
+                                    <div class="airport-name">Los Angeles</div>
+                                </div>
+                            </div>
+
+                            <div class="flight-info">
+                                <div class="info-item">
+                                    <div class="info-label">GATE</div>
+                                    <div class="info-value">B22</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">SEAT</div>
+                                    <div class="info-value">12A</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">ALTITUDE</div>
+                                    <div class="info-value">35K ft</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="mini-compass">
+                                        <div class="mini-pulse-ring"></div>
+                                        <div class="mini-compass-ring">
+                                            <div class="mini-needle"></div>
+                                            <div class="mini-center"></div>
+                                            <div class="mini-cardinal n">N</div>
+                                            <div class="mini-cardinal s">S</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wingmate Section -->
+                        <div class="wingmate-section">
+                            <div class="wingmate-avatar">🦅</div>
+                            <div class="wingmate-content">
+                                <div class="wingmate-name">WINGMATE AI</div>
+                                <div class="wingmate-message">
+                                    You're halfway there! Flight is on schedule. 
+                                    I'll alert you 30 minutes before landing. ✨
+                                </div>
+                                <div class="message-time">Just now</div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="quick-actions">
+                            <div class="action-btn">
+                                <div class="action-icon">📍</div>
+                                <div class="action-label">Track Map</div>
+                            </div>
+                            <div class="action-btn">
+                                <div class="action-icon">📞</div>
+                                <div class="action-label">Notify Contact</div>
+                            </div>
+                            <div class="action-btn">
+                                <div class="action-icon">🚗</div>
+                                <div class="action-label">Book Ride</div>
+                            </div>
+                            <div class="action-btn">
+                                <div class="action-icon">⚙️</div>
+                                <div class="action-label">Automation</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item active">
+                            <div class="nav-icon">✈️</div>
+                            <div class="nav-label">Flights</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">🧭</div>
+                            <div class="nav-label">Navigate</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">⚡</div>
+                            <div class="nav-label">Automate</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">👤</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-label">
+                <h3>📱 Main Dashboard</h3>
+                <p>Live flight tracking with Wingmate AI assistant and navigation compass</p>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: GATE NAVIGATION -->
+        <div>
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <!-- App Header -->
+                    <div class="app-header">
+                        <div class="app-logo">
+                            <div class="logo-icon">🧭</div>
+                            <div class="logo-text">NAVIA</div>
+                        </div>
+                        <div class="header-actions">
+                            <div class="icon-btn">🔔</div>
+                            <div class="icon-btn">⚙️</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Status Bar -->
+                    <div class="live-status">
+                        <div class="live-dot"></div>
+                        <span class="live-text">NAVIGATION ACTIVE</span>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="app-content">
+                        <!-- Gate Info Card -->
+                        <div class="gate-info">
+                            <div class="gate-header">
+                                <div>
+                                    <div class="gate-label">Your Gate</div>
+                                    <div class="gate-number">B22</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="gate-label">Direction</div>
+                                    <div class="gate-direction">🧭 25° NNE</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                <span>🚶 8 min walk</span>
+                                <span>📏 450 meters</span>
+                            </div>
+                        </div>
+
+                        <!-- Full Compass Display -->
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px;">
+                            <div style="width: 200px; height: 200px; margin: 0 auto; position: relative;">
+                                <!-- Simplified compass visual -->
+                                <div style="width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, #1e3a8a, #0f1729); border: 3px solid rgba(14, 165, 233, 0.4); position: relative; animation: compassRotate 8s linear infinite;">
+                                    <div style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; font-weight: 800; color: #0EA5E9;">N</div>
+                                    <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; font-weight: 800; color: #0EA5E9;">S</div>
+                                    <div style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 800; color: #0EA5E9;">W</div>
+                                    <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; font-weight: 800; color: #0EA5E9;">E</div>
+                                    
+                                    <!-- Gate markers -->
+                                    <div style="position: absolute; top: 20px; right: 40px; width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #D97706); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);">B22</div>
+                                    
+                                    <!-- Center -->
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 50%; background: #F59E0B; border: 3px solid white; box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); animation: centerPulse 1.5s ease-in-out infinite;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Tap compass for detailed airport map
+                            </div>
+                        </div>
+
+                        <!-- Wingmate Navigation Help -->
+                        <div class="wingmate-section">
+                            <div class="wingmate-avatar">🦅</div>
+                            <div class="wingmate-content">
+                                <div class="wingmate-name">WINGMATE AI</div>
+                                <div class="wingmate-message">
+                                    Gate B22 is in Terminal B, northeast from your location. 
+                                    Head towards the north signs and turn right. 🎯
+                                </div>
+                                <div class="message-time">2 minutes ago</div>
+                            </div>
+                        </div>
+
+                        <!-- Nearby Gates -->
+                        <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-top: 15px;">
+                            <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Nearby Gates</div>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(14, 165, 233, 0.1); border-radius: 10px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(14, 165, 233, 0.3); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem;">A5</div>
+                                        <span style="font-size: 0.85rem;">Gate A5</span>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">250° • 12 min</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(14, 165, 233, 0.1); border-radius: 10px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(14, 165, 233, 0.3); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem;">C15</div>
+                                        <span style="font-size: 0.85rem;">Gate C15</span>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">135° • 6 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <div class="nav-icon">✈️</div>
+                            <div class="nav-label">Flights</div>
+                        </div>
+                        <div class="nav-item active">
+                            <div class="nav-icon">🧭</div>
+                            <div class="nav-label">Navigate</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">⚡</div>
+                            <div class="nav-label">Automate</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">👤</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-label">
+                <h3>🧭 Gate Navigation</h3>
+                <p>Full compass with 360° degrees and gate location markers for easy airport navigation</p>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: AUTOMATION CENTER -->
+        <div>
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <!-- App Header -->
+                    <div class="app-header">
+                        <div class="app-logo">
+                            <div class="logo-icon">🧭</div>
+                            <div class="logo-text">NAVIA</div>
+                        </div>
+                        <div class="header-actions">
+                            <div class="icon-btn">🔔</div>
+                            <div class="icon-btn">⚙️</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Status Bar -->
+                    <div class="live-status">
+                        <div class="live-dot"></div>
+                        <span class="live-text">3 WORKFLOWS ACTIVE</span>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="app-content">
+                        <div style="margin-bottom: 20px;">
+                            <h2 style="font-size: 1.5rem; margin-bottom: 8px;">⚡ Automation</h2>
+                            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">Set it and forget it workflows</p>
+                        </div>
+
+                        <!-- Active Workflows -->
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 15px; padding: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; animation: statusPulse 1.5s ease-in-out infinite;"></div>
+                                    <span style="font-weight: 700; font-size: 0.9rem; color: #10B981;">ACTIVE</span>
+                                </div>
+                                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">When landing</span>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">📱 Notify Family</div>
+                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 10px;">
+                                Send SMS to Mom: "Landed safely! ✈️"
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;">Flight AA 1234</div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;">SMS</div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 15px; padding: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; animation: statusPulse 1.5s ease-in-out infinite;"></div>
+                                    <span style="font-weight: 700; font-size: 0.9rem; color: #10B981;">ACTIVE</span>
+                                </div>
+                                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">30 min before landing</span>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">🚗 Request Uber</div>
+                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 10px;">
+                                Book Uber to "123 Main St, Los Angeles"
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;">Flight AA 1234</div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;">Uber API</div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; animation: statusPulse 1.5s ease-in-out infinite;"></div>
+                                    <span style="font-weight: 700; font-size: 0.9rem; color: #10B981;">ACTIVE</span>
+                                </div>
+                                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">On delay</span>
+                            </div>
+                            <div style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">📧 Email Boss</div>
+                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 10px;">
+                                "My flight is delayed. Will be late to meeting."
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;">All flights</div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem;">Email</div>
+                            </div>
+                        </div>
+
+                        <!-- Wingmate Suggestion -->
+                        <div class="wingmate-section">
+                            <div class="wingmate-avatar">🦅</div>
+                            <div class="wingmate-content">
+                                <div class="wingmate-name">WINGMATE AI</div>
+                                <div class="wingmate-message">
+                                    All your automations are set! I'll handle everything 
+                                    while you relax. Want to add calendar sync? 📅
+                                </div>
+                                <div class="message-time">1 hour ago</div>
+                            </div>
+                        </div>
+
+                        <!-- Add New Button -->
+                        <div style="background: rgba(14, 165, 233, 0.2); border: 2px dashed rgba(14, 165, 233, 0.5); border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">➕</div>
+                            <div style="font-weight: 600; color: #0EA5E9; margin-bottom: 4px;">Create New Workflow</div>
+                            <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">Automate your next trip</div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <div class="nav-icon">✈️</div>
+                            <div class="nav-label">Flights</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">🧭</div>
+                            <div class="nav-label">Navigate</div>
+                        </div>
+                        <div class="nav-item active">
+                            <div class="nav-icon">⚡</div>
+                            <div class="nav-label">Automate</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon">👤</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-label">
+                <h3>⚡ Automation Center</h3>
+                <p>Create powerful workflows powered by Wingmate AI - set it and forget it!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🧭 Navia Complete App Mockup Loaded');
+        console.log('📱 3 screens showing:');
+        console.log('   1. Main Dashboard with live tracking');
+        console.log('   2. Gate Navigation with compass');
+        console.log('   3. Automation workflows');
+        console.log('🦅 Wingmate AI assistant featured throughout');
+    </script>
+</body>
+</html>
