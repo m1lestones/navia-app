@@ -1,5 +1,6 @@
-import React from 'react';
+// src/components/automation/AutomationSimple.js
 
+import React from 'react';
 const AutomationSimple = () => {
   const workflows = [
     {

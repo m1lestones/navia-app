@@ -1,3 +1,6 @@
+
+// src/components/navigation/NavigationSimple.js
+
 import React, { useState, useEffect } from 'react';
 
 const NavigationSimple = () => {

@@ -1,3 +1,4 @@
+// src/components/common/ProfileSimple.js
 import React from 'react';
 
 const ProfileSimple = () => {

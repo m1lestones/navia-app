@@ -1,3 +1,7 @@
+// src/components/dashboard/DashboardSimple.js
+
+import React from 'react';
+
 const DashboardSimple = () => {
   return (
     <div style={styles.container}>

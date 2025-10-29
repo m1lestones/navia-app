@@ -696,11 +696,11 @@
                 const number = document.createElement('div');
                 number.className = i % 90 === 0 ? 'degree-number major' : 'degree-number';
                 number.textContent = i;
-                number.style.transform = `translate(-50%, 0) rotate(${i}deg)`;
+                number.style.transform = `rotate(${i}deg) translateY(-185px) rotate(-${i}deg)`;
                 compassRing.appendChild(number);
             }
         }
-
+    
         // Log compass details
         console.log('🧭 Navia Compass with Gate Locations Loaded');
         console.log('📐 Full 360° degree markers displayed');
@@ -720,7 +720,7 @@
             compassElement.appendChild(gateMarker);
             console.log(`✅ Added ${gateName} at ${degrees}°`);
         }
-
+    
         // You can call this function to add more gates:
         // addGate('D8', 180); // Adds Gate D8 at 180° (South)
     </script>
