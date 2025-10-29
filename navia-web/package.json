@@ -1,0 +1,12 @@
+{
+  "name": "navia-web",
+  "version": "1.0.0",
+  "description": "NAVIA Flight Tracking Web App",
+  "main": "index.js",
+  "scripts": {
+    "start": "python3 -m http.server 3000"
+  },
+  "keywords": ["flight", "tracking"],
+  "author": "",
+  "license": "ISC"
+}
