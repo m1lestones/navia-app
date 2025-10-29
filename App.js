@@ -3,8 +3,8 @@ import DashboardScreen from './src/components/dashboard/DashboardScreen';
 import NavigationScreen from './src/components/navigation/NavigationScreen';
 import AutomationScreen from './src/components/automation/AutomationScreen';
 import ProfileScreen from './src/components/common/ProfileScreen';
-import LoginScreen from './src/components/auth/LoginScreen';
-import SignupScreen from './src/components/auth/SignupScreen';
+import EnhancedLoginScreen from './src/components/auth/EnhancedLoginScreen';
+import EnhancedSignupScreen from './src/components/auth/EnhancedSignupScreen';
 import { colors } from './src/styles/theme';
 
 const App = () => {
@@ -39,12 +39,12 @@ const App = () => {
   // Show auth screens if not logged in
   if (!user) {
     return authMode === 'login' ? (
-      <LoginScreen
+      <EnhancedLoginScreen
         onLogin={handleLogin}
         onToggleMode={() => setAuthMode('signup')}
       />
     ) : (
-      <SignupScreen
+      <EnhancedSignupScreen
         onSignup={handleSignup}
         onToggleMode={() => setAuthMode('login')}
       />
