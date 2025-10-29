@@ -492,13 +492,6 @@
                 <div class="compass-outer-ring">
                     <!-- Degree Markers -->
                     <script>
-                        for (let i = 0; i < 360; i += 10) {
-                            const marker = document.createElement('div');
-                            marker.className = i % 90 === 0 ? 'degree-marker major' : 'degree-marker';
-                            marker.style.transform = `translate(-50%, 0) rotate(${i}deg)`;
-                            document.currentScript.parentElement.appendChild(marker);
-                        }
-                    </script>
                 </div>
 
                 <!-- Cardinal Directions -->
@@ -599,6 +592,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const compassOuterRing = document.querySelector('.compass-outer-ring');
+        for (let i = 0; i < 360; i += 10) {
+            const marker = document.createElement('div');
+            marker.className = i % 90 === 0 ? 'degree-marker major' : 'degree-marker';
+            marker.style.transform = `translate(-50%, 0) rotate(${i}deg)`;
+            compassOuterRing.appendChild(marker);
+        }
+    </script>
 
     <div class="features" style="margin-top: 30px;">
         <h3>🎨 Color Palette</h3>

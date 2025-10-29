@@ -696,7 +696,7 @@
                 const number = document.createElement('div');
                 number.className = i % 90 === 0 ? 'degree-number major' : 'degree-number';
                 number.textContent = i;
-                number.style.transform = `translate(-50%, 0) rotate(${i}deg)`;
+                number.style.transform = `rotate(${i}deg) translateY(-185px) rotate(-${i}deg)`;
                 compassRing.appendChild(number);
             }
         }

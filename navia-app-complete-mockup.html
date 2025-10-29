@@ -43,6 +43,8 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            display: flex; /* Changed for single mockup */
+            justify-content: center;
             gap: 40px;
         }
 
@@ -138,6 +140,11 @@
             font-size: 1.1rem;
         }
 
+        .icon-btn:active {
+            background: rgba(14, 165, 233, 0.3);
+            transform: scale(0.95);
+        }
+
         .icon-btn:hover {
             background: rgba(14, 165, 233, 0.3);
             transform: scale(1.1);
@@ -186,6 +193,12 @@
             padding: 20px;
             overflow-y: auto;
             height: calc(100% - 180px);
+            scroll-behavior: smooth;
+        }
+
+        .app-content::-webkit-scrollbar {
+            width: 5px;
+            background: transparent;
         }
 
         /* FLIGHT CARD */
@@ -533,6 +546,11 @@
             transition: all 0.3s ease;
         }
 
+        .action-btn:active {
+            transform: scale(0.95);
+            background: rgba(14, 165, 233, 0.2);
+        }
+
         .action-btn:hover {
             background: rgba(14, 165, 233, 0.2);
             border-color: rgba(14, 165, 233, 0.5);
@@ -570,6 +588,11 @@
             gap: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        .nav-item:active {
+            transform: scale(0.9);
+            color: #0284C7;
         }
 
         .nav-item.active {
@@ -612,6 +635,11 @@
         .screen-label p {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
+        }
+
+        /* Helper class to hide screens */
+        .hidden {
+            display: none !important;
         }
 
         /* RESPONSIVE PADDING SYSTEM */
@@ -1367,6 +1395,7 @@
 
     <div class="mockup-container">
         <!-- SCREEN 1: MAIN DASHBOARD -->
+        <!-- SINGLE INTERACTIVE MOCKUP -->
         <div>
             <div class="phone-mockup">
                 <div class="phone-notch"></div>
@@ -1380,6 +1409,8 @@
                         <div class="header-actions">
                             <div class="icon-btn">🔔</div>
                             <div class="icon-btn">⚙️</div>
+                            <div class="icon-btn" onclick="alert('Notifications screen would show here.')">🔔</div>
+                            <div class="icon-btn" onclick="alert('Settings screen would show here.')">⚙️</div>
                         </div>
                     </div>
 
@@ -1391,6 +1422,8 @@
 
                     <!-- Main Content -->
                     <div class="app-content">
+                    <!-- Main Content - SCREEN 1: DASHBOARD -->
+                    <div class="app-content" id="screen-dashboard">
                         <!-- Flight Card -->
                         <div class="flight-card">
                             <div class="flight-header">
@@ -1469,19 +1502,24 @@
                         <!-- Quick Actions -->
                         <div class="quick-actions">
                             <div class="action-btn">
+                            <div class="action-btn" onclick="alert('Opening live map...')">
                                 <div class="action-icon">📍</div>
                                 <div class="action-label">Track Map</div>
                             </div>
                             <div class="action-btn">
+                            <div class="action-btn" onclick="alert('Opening contacts to notify...')">
                                 <div class="action-icon">📞</div>
                                 <div class="action-label">Notify Contact</div>
                             </div>
                             <div class="action-btn">
+                            <div class="action-btn" onclick="alert('Opening ride booking service...')">
                                 <div class="action-icon">🚗</div>
                                 <div class="action-label">Book Ride</div>
                             </div>
                             <div class="action-btn">
                                 <div class="action-icon">⚙️</div>
+                            <div class="action-btn" onclick="showScreen('automate')">
+                                <div class="action-icon">⚡</div>
                                 <div class="action-label">Automation</div>
                             </div>
                         </div>
@@ -1539,6 +1577,8 @@
 
                     <!-- Main Content -->
                     <div class="app-content">
+                    <!-- Main Content - SCREEN 2: NAVIGATION -->
+                    <div class="app-content hidden" id="screen-navigate">
                         <!-- Gate Info Card -->
                         <div class="gate-info">
                             <div class="gate-header">
@@ -1557,6 +1597,7 @@
                             </div>
                         </div>
 
+    
                         <!-- Full Compass Display -->
                         <div style="background: rgba(255,255,255,0.05); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px;">
                             <div style="width: 200px; height: 200px; margin: 0 auto; position: relative;">
@@ -1576,9 +1617,11 @@
                             </div>
                             <div style="margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
                                 Tap compass for detailed airport map
+                                Tap compass for detailed airport map.
                             </div>
                         </div>
 
+    
                         <!-- Wingmate Navigation Help -->
                         <div class="wingmate-section">
                             <div class="wingmate-avatar">🦅</div>
@@ -1592,6 +1635,7 @@
                             </div>
                         </div>
 
+    
                         <!-- Nearby Gates -->
                         <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; margin-top: 15px;">
                             <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Nearby Gates</div>
@@ -1666,6 +1710,9 @@
 
                     <!-- Main Content -->
                     <div class="app-content">
+    
+                    <!-- Main Content - SCREEN 3: AUTOMATION -->
+                    <div class="app-content hidden" id="screen-automate">
                         <div style="margin-bottom: 20px;">
                             <h2 style="font-size: 1.5rem; margin-bottom: 8px;">⚡ Automation</h2>
                             <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">Set it and forget it workflows</p>
@@ -1741,6 +1788,8 @@
 
                         <!-- Add New Button -->
                         <div style="background: rgba(14, 165, 233, 0.2); border: 2px dashed rgba(14, 165, 233, 0.5); border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+                        <!-- Add New Button --> 
+                        <div onclick="alert('Opening workflow creation screen...')" style="background: rgba(14, 165, 233, 0.2); border: 2px dashed rgba(14, 165, 233, 0.5); border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
                             <div style="font-size: 2rem; margin-bottom: 8px;">➕</div>
                             <div style="font-weight: 600; color: #0EA5E9; margin-bottom: 4px;">Create New Workflow</div>
                             <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">Automate your next trip</div>
@@ -1748,34 +1797,90 @@
                     </div>
 
                     <!-- Bottom Navigation -->
+                    <!-- SHARED BOTTOM NAVIGATION -->
                     <div class="bottom-nav">
                         <div class="nav-item">
+                        <div class="nav-item active" id="nav-dashboard" onclick="showScreen('dashboard')">
                             <div class="nav-icon">✈️</div>
                             <div class="nav-label">Flights</div>
                         </div>
                         <div class="nav-item">
+                        <div class="nav-item" id="nav-navigate" onclick="showScreen('navigate')">
                             <div class="nav-icon">🧭</div>
                             <div class="nav-label">Navigate</div>
                         </div>
                         <div class="nav-item active">
+                        <div class="nav-item" id="nav-automate" onclick="showScreen('automate')">
                             <div class="nav-icon">⚡</div>
                             <div class="nav-label">Automate</div>
                         </div>
                         <div class="nav-item">
+                        <div class="nav-item" id="nav-profile" onclick="alert('Profile screen would show here.')">
                             <div class="nav-icon">👤</div>
                             <div class="nav-label">Profile</div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="screen-label">
                 <h3>⚡ Automation Center</h3>
                 <p>Create powerful workflows powered by Wingmate AI - set it and forget it!</p>
+                <h3 id="screen-title">📱 Main Dashboard</h3>
+                <p id="screen-description">Live flight tracking with Wingmate AI assistant and navigation compass</p>
             </div>
         </div>
     </div>
 
     <script>
+        const screenTitles = {
+            dashboard: '📱 Main Dashboard',
+            navigate: '🧭 Gate Navigation',
+            automate: '⚡ Automation Center'
+        };
+        const screenDescriptions = {
+            dashboard: 'Live flight tracking with Wingmate AI assistant and navigation compass.',
+            navigate: 'Full compass with 360° degrees and gate location markers for easy airport navigation.',
+            automate: 'Create powerful workflows powered by Wingmate AI - set it and forget it!'
+        };
+
+        function showScreen(screenName) {
+            // Hide all screens
+            document.getElementById('screen-dashboard').classList.add('hidden');
+            document.getElementById('screen-navigate').classList.add('hidden');
+            document.getElementById('screen-automate').classList.add('hidden');
+
+            // Deactivate all nav items
+            document.getElementById('nav-dashboard').classList.remove('active');
+            document.getElementById('nav-navigate').classList.remove('active');
+            document.getElementById('nav-automate').classList.remove('active');
+            document.getElementById('nav-profile').classList.remove('active');
+
+            // Show the selected screen
+            document.getElementById(`screen-${screenName}`).classList.remove('hidden');
+
+            // Activate the selected nav item
+            document.getElementById(`nav-${screenName}`).classList.add('active');
+
+            // Update the label below the phone
+            document.getElementById('screen-title').textContent = screenTitles[screenName];
+            document.getElementById('screen-description').textContent = screenDescriptions[screenName];
+
+            // Update the status bar text
+            const liveStatusText = document.querySelector('.live-text');
+            const liveStatusDot = document.querySelector('.live-dot');
+            if (screenName === 'dashboard') {
+                liveStatusText.textContent = 'LIVE TRACKING';
+                liveStatusDot.style.background = '#10B981'; // Green
+            } else if (screenName === 'navigate') {
+                liveStatusText.textContent = 'NAVIGATION ACTIVE';
+                liveStatusDot.style.background = '#0EA5E9'; // Blue
+            } else if (screenName === 'automate') {
+                liveStatusText.textContent = '3 WORKFLOWS ACTIVE';
+                liveStatusDot.style.background = '#F59E0B'; // Amber
+            }
+        }
+
         console.log('🧭 Navia Complete App Mockup Loaded');
         console.log('📱 3 screens showing:');
         console.log('   1. Main Dashboard with live tracking');
