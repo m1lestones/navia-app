@@ -1,6 +1,5 @@
-// src/components/common/ProfileSimple.js
 import React from 'react';
- 
+
 const ProfileSimple = () => {
   return (
     <div style={styles.container}>

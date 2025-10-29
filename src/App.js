@@ -1,3 +1,16 @@
+// import React from 'react';
+
+// const App = () => {
+//   return (
+//     <div style={{ backgroundColor: 'white', color: 'black', padding: '50px' }}>
+//       <h1>TEST - Can you see this?</h1>
+//       <p>If you see this, React is working!</p>
+//     </div>
+//   );
+// };
+
+// export default App;
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import DashboardSimple from './components/dashboard/DashboardSimple';

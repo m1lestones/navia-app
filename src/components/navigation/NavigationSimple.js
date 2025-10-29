@@ -1,6 +1,3 @@
-
-// src/components/navigation/NavigationSimple.js
-
 import React, { useState, useEffect } from 'react';
 
 const NavigationSimple = () => {
@@ -152,13 +149,11 @@ const styles = {
     textAnchor: 'middle',
   },
   gateInfo: {
-    backgroundColor: '#0EA5E9',
-    backgroundColorWithAlpha: 'rgba(14, 165, 233, 0.1)',
+    backgroundColor: 'rgba(14, 165, 233, 0.08)',
     padding: '20px',
     borderRadius: '12px',
     textAlign: 'center',
     border: '1px solid rgba(14, 165, 233, 0.3)',
-    backgroundColor: 'rgba(14, 165, 233, 0.08)',
   },
   gateLabel: {
     fontSize: '11px',
