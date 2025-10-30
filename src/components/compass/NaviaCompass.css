@@ -1,0 +1,384 @@
+.navia-compass-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px 50px;
+  background: transparent;
+}
+
+/* NAVIA COMPASS */
+.navia-compass {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Luminous Glow */
+.luminous-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+  animation: luminousBreath 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes luminousBreath {
+  0%, 100% { 
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Navigation Pulse Rings */
+.nav-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(14, 165, 233, 0.6);
+  animation: navPulseExpand 1.5s ease-out infinite;
+}
+
+.nav-pulse.delay-1 {
+  animation-delay: 0.5s;
+}
+
+.nav-pulse.delay-2 {
+  animation-delay: 1s;
+}
+
+@keyframes navPulseExpand {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    border-color: rgba(14, 165, 233, 0.8);
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+    border-color: rgba(14, 165, 233, 0);
+  }
+}
+
+/* Outer Ring with Degree Numbers */
+.compass-outer-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1e3a5f, #0f1729);
+  box-shadow: 
+    inset 0 0 30px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(14, 165, 233, 0.3);
+  border: 3px solid rgba(14, 165, 233, 0.3);
+}
+
+/* Degree Markers */
+.degree-marker {
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  top: 10px;
+  left: 50%;
+  transform-origin: 50% 150px;
+  box-shadow: 0 0 3px rgba(14, 165, 233, 0.5);
+}
+
+.degree-marker.major {
+  width: 3px;
+  height: 18px;
+  background: #0EA5E9;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 1);
+}
+
+/* Degree Numbers */
+.degree-number {
+  position: absolute;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0 0 5px rgba(14, 165, 233, 0.5);
+  transform-origin: center;
+  width: 30px;
+  text-align: center;
+  left: 50%;
+  top: 20px;
+}
+
+.degree-number.major {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0EA5E9;
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
+}
+
+/* Cardinal Directions */
+.cardinal {
+  position: absolute;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0EA5E9;
+  text-shadow: 0 0 20px rgba(14, 165, 233, 1);
+  z-index: 10;
+  animation: cardinalGlow 3s ease-in-out infinite;
+}
+
+.cardinal.n { top: 40px; left: 50%; transform: translateX(-50%); }
+.cardinal.e { right: 40px; top: 50%; transform: translateY(-50%); }
+.cardinal.s { bottom: 40px; left: 50%; transform: translateX(-50%); }
+.cardinal.w { left: 40px; top: 50%; transform: translateY(-50%); }
+
+@keyframes cardinalGlow {
+  0%, 100% { 
+    text-shadow: 0 0 20px rgba(14, 165, 233, 1);
+  }
+  50% { 
+    text-shadow: 0 0 30px rgba(14, 165, 233, 1), 0 0 45px rgba(14, 165, 233, 0.5);
+  }
+}
+
+/* Intercardinal Directions */
+.intercardinal {
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(14, 165, 233, 0.8);
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
+  z-index: 10;
+}
+
+.intercardinal.ne { top: 55px; right: 55px; }
+.intercardinal.se { bottom: 55px; right: 55px; }
+.intercardinal.sw { bottom: 55px; left: 55px; }
+.intercardinal.nw { top: 55px; left: 55px; }
+
+/* Gate Location Markers */
+.gate-marker {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 0 20px rgba(245, 158, 11, 0.8),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: gatePulse 2s ease-in-out infinite;
+  z-index: 15;
+}
+
+.gate-marker:hover {
+  transform: scale(1.2) rotate(var(--rotation));
+  box-shadow: 
+    0 0 30px rgba(245, 158, 11, 1),
+    0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes gatePulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.8), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 35px rgba(245, 158, 11, 1), 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Inner Face */
+.compass-inner {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #1e3a8a, #0f1729);
+  border: 2px solid rgba(14, 165, 233, 0.4);
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.7),
+    0 0 30px rgba(14, 165, 233, 0.2);
+}
+
+/* Compass Rose Lines */
+.rose-line {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(14, 165, 233, 0.6), transparent);
+  left: 50%;
+  top: 50%;
+  transform-origin: 50% 0%;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+}
+
+/* Radar Sweep */
+.radar-sweep {
+  position: absolute;
+  width: 2px;
+  height: 110px;
+  background: linear-gradient(to bottom, rgba(245, 158, 11, 0.9), transparent);
+  top: 50%;
+  left: 50%;
+  transform-origin: top center;
+  transform: translate(-50%, 0);
+  animation: radarSweep 4s linear infinite;
+  z-index: 5;
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.8));
+}
+
+@keyframes radarSweep {
+  0% { transform: translate(-50%, 0) rotate(0deg); }
+  100% { transform: translate(-50%, 0) rotate(360deg); }
+}
+
+/* Compass Needle */
+.compass-needle {
+  position: absolute;
+  width: 6px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  transform-origin: bottom center;
+  transition: transform 0.05s linear;
+  z-index: 10;
+}
+
+.needle-north {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 60px solid #FF0066;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 15px #FF0066);
+  animation: needleGlow 1.5s ease-in-out infinite;
+}
+
+.needle-south {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 40px solid rgba(255, 255, 255, 0.5);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes needleGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 15px #FF0066);
+  }
+  50% { 
+    filter: drop-shadow(0 0 25px #FF0066) drop-shadow(0 0 35px #FF0066);
+  }
+}
+
+/* Center Hub */
+.compass-center {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #F59E0B, #D97706);
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 0 25px rgba(245, 158, 11, 0.9),
+    inset 0 0 15px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  animation: centerPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes centerPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.9);
+  }
+  50% { 
+    transform: scale(1.15);
+    box-shadow: 0 0 40px rgba(245, 158, 11, 1), 0 0 60px rgba(245, 158, 11, 0.5);
+  }
+}
+
+/* Status Indicator */
+.status-indicator {
+  position: absolute;
+  bottom: -60px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(14, 165, 233, 0.1);
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: statusPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 15px #10B981;
+}
+
+@keyframes statusPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 15px #10B981;
+  }
+  50% { 
+    transform: scale(1.3);
+    box-shadow: 0 0 25px #10B981, 0 0 35px rgba(16, 185, 129, 0.5);
+  }
+}
+
+.status-text {
+  font-weight: 600;
+  color: #0EA5E9;
+  font-size: 0.9rem;
+}
+
+/* Brand Name */
+.brand-name {
+  margin-top: 70px;
+  text-align: center;
+}
+
+.brand-name h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.brand-name p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}

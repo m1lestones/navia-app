@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -32,10 +33,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html'
+    }),
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL || 'http://localhost:3000/api')
     })
   ],
   devServer: {
-    port: 3000,
+    port: 3001,
     hot: true,
     historyApiFallback: true,
   }
