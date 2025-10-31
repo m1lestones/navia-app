@@ -1,0 +1,373 @@
+/* App Header */
+.app-header {
+  padding: 50px 20px 20px;
+  background: rgba(14, 165, 233, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(14, 165, 233, 0.3);
+  transform: scale(1.1);
+}
+
+/* Status Bar */
+.status-bar {
+  padding: 12px 20px;
+  background: rgba(16, 185, 129, 0.15);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 15px #10B981;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px #10B981;
+  }
+  50% {
+    transform: scale(1.3);
+    box-shadow: 0 0 25px #10B981;
+  }
+}
+
+.status-text {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #10B981;
+  letter-spacing: 1px;
+}
+
+/* Main Content */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Flight Card */
+.flight-card {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.flight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.flight-number {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0EA5E9;
+}
+
+.flight-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #10B981;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.flight-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.airport {
+  text-align: center;
+}
+
+.airport-code {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.airport-city {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.flight-progress {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 15px;
+}
+
+.flight-icon {
+  font-size: 1.5rem;
+  transform: rotate(90deg);
+}
+
+.flight-time {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.time-remaining {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.flight-details {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.detail-item {
+  text-align: center;
+}
+
+.detail-label {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.detail-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0EA5E9;
+}
+
+.mini-compass {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(14, 165, 233, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compass-ring {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(14, 165, 233, 0.5);
+}
+
+.compass-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F59E0B;
+  position: absolute;
+}
+
+/* Wingmate Notification */
+.wingmate-notification {
+  background: rgba(120, 53, 15, 0.3);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wingmate-notification:hover {
+  background: rgba(120, 53, 15, 0.4);
+  transform: translateY(-2px);
+}
+
+.wingmate-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.wingmate-content {
+  flex: 1;
+}
+
+.wingmate-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #F59E0B;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.wingmate-message {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+  margin-bottom: 5px;
+}
+
+.wingmate-time {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: rgba(14, 165, 233, 0.2);
+  transform: translateY(-2px);
+}
+
+.action-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.action-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px 20px 25px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-item.active {
+  color: #0EA5E9;
+}
+
+.nav-item:hover {
+  color: #0EA5E9;
+  transform: translateY(-2px);
+}
+
+.nav-icon {
+  font-size: 1.3rem;
+}
+
+.nav-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+}

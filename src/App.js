@@ -4,6 +4,9 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import NavigateComplete from './components/navigation/NavigateComplete';
+import WingmateChat from './components/wingmate/WingmateChat';
+import Automate from './components/automate/Automate';
+import Profile from './components/profile/Profile';
 import './styles/index.css';
 
 function App() {
@@ -33,6 +36,30 @@ function App() {
           element={
             <ProtectedRoute>
               <NavigateComplete />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/wingmate" 
+          element={
+            <ProtectedRoute>
+              <WingmateChat />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/automate" 
+          element={
+            <ProtectedRoute>
+              <Automate />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           } 
         />

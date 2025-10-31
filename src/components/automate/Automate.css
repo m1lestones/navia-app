@@ -1,0 +1,135 @@
+/* Page Title */
+.page-title {
+  margin-bottom: 20px;
+}
+
+.page-title h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.page-title p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Status Bar for Automate */
+.status-automate {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.status-automate .status-text {
+  color: #10B981;
+}
+
+/* Workflow Cards */
+.workflow-card {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.workflow-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.active-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #10B981;
+  letter-spacing: 1px;
+}
+
+.workflow-trigger {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.workflow-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.workflow-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.workflow-description {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.workflow-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Create Workflow Button */
+.create-workflow-btn {
+  background: rgba(14, 165, 233, 0.2);
+  border: 2px dashed rgba(14, 165, 233, 0.5);
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.create-workflow-btn:hover {
+  background: rgba(14, 165, 233, 0.3);
+  transform: translateY(-2px);
+}
+
+.create-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.create-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0EA5E9;
+  margin-bottom: 5px;
+}
+
+.create-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}

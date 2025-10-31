@@ -1,0 +1,266 @@
+/* Compass Container */
+.compass-container {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.compass-outer {
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  position: relative;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 50%;
+  border: 3px solid rgba(14, 165, 233, 0.3);
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.2);
+}
+
+.compass-degrees {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+}
+
+.degree-marker {
+  position: absolute;
+  font-weight: 600;
+}
+
+.compass-main {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 2px solid rgba(14, 165, 233, 0.5);
+  animation: compassGlow 3s ease-in-out infinite;
+}
+
+@keyframes compassGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(14, 165, 233, 0.6);
+  }
+}
+
+/* Cardinal Directions */
+.cardinal {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0EA5E9;
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
+}
+
+.cardinal-n {
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cardinal-e {
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cardinal-s {
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cardinal-w {
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Intercardinal Directions */
+.intercardinal {
+  position: absolute;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(14, 165, 233, 0.8);
+}
+
+.intercardinal-nw {
+  top: 35px;
+  left: 35px;
+}
+
+.intercardinal-ne {
+  top: 35px;
+  right: 35px;
+}
+
+.intercardinal-sw {
+  bottom: 35px;
+  left: 35px;
+}
+
+.intercardinal-se {
+  bottom: 35px;
+  right: 35px;
+}
+
+/* Gate Markers */
+.gate-marker {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #F59E0B;
+  border: 3px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+  animation: gatePulse 2s ease-in-out infinite;
+}
+
+@keyframes gatePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.gate-b22 {
+  top: 20px;
+  right: 60px;
+}
+
+.gate-c15 {
+  bottom: 60px;
+  right: 20px;
+}
+
+.gate-a5 {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Compass Center */
+.compass-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #F59E0B;
+  border: 3px solid #fff;
+  box-shadow: 0 0 15px #F59E0B;
+  animation: centerPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes centerPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+}
+
+/* Compass Status */
+.compass-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #10B981;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.status-navigate {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.status-navigate .status-text {
+  color: #0EA5E9;
+}
+
+.tap-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 15px 0;
+}
+
+/* Nearby Gates */
+.nearby-gates {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.gate-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.gate-badge {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #F59E0B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.gate-info {
+  flex: 1;
+}
+
+.gate-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.gate-direction {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}

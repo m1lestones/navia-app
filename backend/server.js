@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./auth-routes');
+const wingmateRoutes = require('./wingmate-routes');
 const { authenticateToken } = require('./auth-middleware');
 
 const app = express();
@@ -18,14 +19,15 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/wingmate', wingmateRoutes);
 
 app.get('/api/profile', authenticateToken, (req, res) => {
   res.json({ message: 'Profile data', user: req.user });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('🚀 Navia Backend running on http://localhost:3000');
+  console.log(`🚀 Navia Backend running on http://localhost:${PORT}`);
 });
 
 module.exports = app;
